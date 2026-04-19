@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KingsCraft - Signature Cross</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: #0a0a0a;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 60px 20px;
+      justify-content: center;
+    }
+
+    .main-image img {
+      width: 400px;
+      max-width: 100%;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .gallery img {
+      width: 80px;
+      cursor: pointer;
+      border: 1px solid #333;
+    }
+
+    .info {
+      max-width: 400px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: gold;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      margin-left: 10px;
+      padding: 12px 20px;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LEFT SIDE -->
+  <div>
+    <div class="main-image">
+      <img id="mainImg" src="Cross1.jpg">
+    </div>
+
+    <div class="gallery">
+      <img src="Cross1.jpg" onclick="changeImg(this)">
+      <img src="Cross2.jpg" onclick="changeImg(this)">
+      <img src="Cross3.jpg" onclick="changeImg(this)">
+      <img src="back2.jpg" onclick="changeImg(this)">
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="info">
+    <h2>Signature Cross Pendant</h2>
+
+    <p style="color:#ccc;">
+      A handcrafted piece designed for durability and style. 
+      Built with premium materials and finished with a luxury touch.
+    </p>
+
+    <h3>$79.99</h3>
+
+    <button class="btn">Buy Now</button>
+    <button class="btn-outline">Add to Cart</button>
+  </div>
+
+</div>
+
+<script>
+function changeImg(element) {
+  document.getElementById("mainImg").src = element.src;
+}
+</script>
+
+</body>
+</html>
