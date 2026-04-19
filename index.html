@@ -89,39 +89,47 @@
 </section>
 
 <section class="section">
-  <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:center; align-items:flex-start;">
 
-    <!-- LEFT: IMAGE GRID -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:500px;">
-      <img src="Cross1.jpg" style="width:100%;">
-      <img src="Cross2.jpg" style="width:100%;">
-      <img src="Cross3.jpg" style="width:100%;">
-      <img src="back2.jpg" style="width:100%;">
+  <div class="product-container">
+
+    <!-- LEFT: MAIN IMAGE -->
+    <div class="image-section">
+      <img id="mainImage" src="Cross1.jpg" onclick="openGallery(0)">
+      
+      <div class="thumbnails">
+        <img src="Cross1.jpg" onclick="changeImage(0)">
+        <img src="Cross2.jpg" onclick="changeImage(1)">
+        <img src="Cross3.jpg" onclick="changeImage(2)">
+        <img src="back2.jpg" onclick="changeImage(3)">
+      </div>
     </div>
 
     <!-- RIGHT: PRODUCT INFO -->
-    <div style="max-width:400px; text-align:left;">
+    <div class="info-section">
       <h2>Signature Cross Pendant</h2>
-      
-      <p style="color:#ccc;">
-        A handcrafted piece designed for durability and style. 
-        Built with premium materials and finished with a luxury touch.
+
+      <!-- IMAGE DESCRIPTION -->
+      <p id="imageDescription">
+        Front view of the cross pendant with polished finish.
       </p>
 
-      <h3 style="margin-top:20px;">$79.99</h3>
+      <h3>$79.99</h3>
 
-      <div style="margin-top:20px;">
-        <button style="padding:12px 20px; background:gold; border:none; font-weight:bold; cursor:pointer;">
-          Buy Now
-        </button>
-
-        <button style="padding:12px 20px; background:transparent; color:white; border:1px solid white; margin-left:10px; cursor:pointer;">
-          Add to Cart
-        </button>
+      <!-- BUTTONS UNDER DESCRIPTION -->
+      <div class="buttons">
+        <button>Buy Now</button>
+        <button class="secondary">Add to Cart</button>
       </div>
     </div>
 
   </div>
+
+  <!-- FULLSCREEN GALLERY -->
+  <div id="galleryModal" class="modal" onclick="closeGallery()">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="galleryImage">
+  </div>
+
 </section>
 
 <footer>
