@@ -45,26 +45,151 @@
       color: black;
       text-decoration: none;
       font-weight: bold;
-      letter-spacing: 1px;
     }
+
+    /* ========================= */
+    /* CATEGORY GRID (NEW)       */
+    /* ========================= */
+
+    .categories {
+      padding: 60px 20px;
+      border-top: 2px solid gold;
+      border-bottom: 2px solid gold;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      position: relative;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      transition: 0.3s;
+    }
+
+    .card span {
+      position: relative;
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      z-index: 1;
+      padding: 10px;
+    }
+
+    .card:hover::before {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    /* ========================= */
+    /* PRODUCT SECTION           */
+    /* ========================= */
 
     .section {
       padding: 80px 20px;
-      text-align: center;
     }
 
-    .products {
+    .product-container {
       display: flex;
-      justify-content: center;
-      gap: 20px;
       flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
     }
 
-    .product {
-      width: 250px;
-      height: 300px;
-      background: #111;
-      border: 1px solid rgba(255,255,255,0.1);
+    .image-section {
+      max-width: 400px;
+    }
+
+    .image-section img {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .thumbnails img {
+      width: 70px;
+    }
+
+    .info-section {
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background: gold;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    /* ========================= */
+    /* MODAL                    */
+    /* ========================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      display: block;
+      margin: auto;
+      max-width: 80%;
+    }
+
+    .close {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
     }
 
     footer {
@@ -73,6 +198,14 @@
       color: #777;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
   </style>
 </head>
 
@@ -84,15 +217,54 @@
 
 <section class="hero">
   <h1>KingsCraft</h1>
-  <p>Bespoke Jewelry • Crafted to Be Noticed </p>
-  <a class="btn" href="#">Shop Coming Soon</a>
+  <p>Bespoke Jewelry • Crafted to Be Noticed</p>
+  <a class="btn" href="#">Shop Now</a>
 </section>
 
+<!-- 🔥 CATEGORY GRID -->
+<section class="categories">
+  <div class="grid">
+
+    <a href="#" class="card" style="background-image:url('rings.jpg')">
+      <span>Shop Rings</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('chains.jpg')">
+      <span>Shop Chains</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('pendants.jpg')">
+      <span>Shop Pendants & Charms</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('earrings.jpg')">
+      <span>Shop Earrings & Studs</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('special.jpg')">
+      <span>Special Items</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('signature.jpg')">
+      <span>Signature Designs</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('handmade.jpg')">
+      <span>Handmade</span>
+    </a>
+
+    <a href="#" class="card" style="background-image:url('contact.jpg')">
+      <span>Contact Us</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- 🔥 PRODUCT -->
 <section class="section">
 
   <div class="product-container">
 
-    <!-- LEFT: MAIN IMAGE -->
     <div class="image-section">
       <img id="mainImage" src="Cross1.jpg" onclick="openGallery(0)">
       
@@ -104,18 +276,15 @@
       </div>
     </div>
 
-    <!-- RIGHT: PRODUCT INFO -->
     <div class="info-section">
       <h2>Signature Cross Pendant</h2>
 
-      <!-- IMAGE DESCRIPTION -->
       <p id="imageDescription">
         Front view of the cross pendant with polished finish.
       </p>
 
       <h3>$79.99</h3>
 
-      <!-- BUTTONS UNDER DESCRIPTION -->
       <div class="buttons">
         <button>Buy Now</button>
         <button class="secondary">Add to Cart</button>
@@ -124,7 +293,6 @@
 
   </div>
 
-  <!-- FULLSCREEN GALLERY -->
   <div id="galleryModal" class="modal" onclick="closeGallery()">
     <span class="close">&times;</span>
     <img class="modal-content" id="galleryImage">
@@ -135,6 +303,29 @@
 <footer>
   © 2026 KingsCraft. All rights reserved.
 </footer>
+
+<script>
+const images = [
+  { src: "Cross1.jpg", desc: "Front view of the cross pendant." },
+  { src: "Cross2.jpg", desc: "Side angle craftsmanship." },
+  { src: "Cross3.jpg", desc: "Close-up detailing." },
+  { src: "back2.jpg", desc: "Back design finish." }
+];
+
+function changeImage(index) {
+  document.getElementById("mainImage").src = images[index].src;
+  document.getElementById("imageDescription").innerText = images[index].desc;
+}
+
+function openGallery(index) {
+  document.getElementById("galleryModal").style.display = "block";
+  document.getElementById("galleryImage").src = images[index].src;
+}
+
+function closeGallery() {
+  document.getElementById("galleryModal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
