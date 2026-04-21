@@ -36,8 +36,22 @@
       max-width: 400px;
     }
 
-    .images img {
+    /* 🔥 NEW: LOCKED IMAGE FRAME */
+    .main-image-container {
       width: 100%;
+      height: 400px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .main-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.2s ease;
     }
 
     .thumbnails {
@@ -110,7 +124,11 @@
 
   <!-- LEFT: IMAGES -->
   <div class="images">
-    <img id="mainImage" src="heartring6.png">
+
+    <!-- 🔥 UPDATED IMAGE WRAPPER -->
+    <div class="main-image-container">
+      <img id="mainImage" src="heartring6.png">
+    </div>
 
     <div class="thumbnails">
       <img src="heartring4.jpg" onclick="changeImage('heartring4.jpg')">
@@ -125,7 +143,7 @@
 
     <p>
       A handmade stirling silver heart ring designed with elegance and simplicity in mind,
-      this timeless classic is here to stay.
+      a timeless classic.
     </p>
 
     <div class="price">$185.99</div>
@@ -142,7 +160,13 @@
 
 <script>
 function changeImage(src) {
-  document.getElementById("mainImage").src = src;
+  const img = document.getElementById("mainImage");
+  img.style.opacity = 0;
+
+  setTimeout(() => {
+    img.src = src;
+    img.style.opacity = 1;
+  }, 100);
 }
 </script>
 
