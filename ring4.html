@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Silver Spiral Ring</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: black;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    header img {
+      max-width: 150px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      padding: 60px 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* IMAGE SECTION */
+    .images {
+      max-width: 400px;
+    }
+
+    /* 🔥 NEW: LOCKED IMAGE FRAME */
+    .main-image-container {
+      width: 100%;
+      height: 400px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .main-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.2s ease;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .thumbnails img {
+      width: 70px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* PRODUCT INFO */
+    .info {
+      max-width: 400px;
+    }
+
+    .info h2 {
+      color: #e2bc6c;
+    }
+
+    .price {
+      color: gold;
+      font-size: 22px;
+      margin: 15px 0;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 10px;
+      border: none;
+    }
+
+    .buy {
+      background: gold;
+      color: black;
+    }
+
+    .cart {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin: 40px;
+      color: #ccc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="FullLogo.png">
+</header>
+
+<div class="container">
+
+  <!-- LEFT: IMAGES -->
+  <div class="images">
+
+    <!-- 🔥 UPDATED IMAGE WRAPPER -->
+    <div class="main-image-container">
+      <img id="mainImage" src="spiral1.png">
+    </div>
+
+    <div class="thumbnails">
+      <img src="spirall.png" onclick="changeImage('spirall.png')">
+      <img src="spiral2.png" onclick="changeImage('spiral2.png')">
+    </div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="info">
+    <h2>Silver Spiral Ring</h2>
+
+    <p>
+      A handmade stirling silver spiral ring with a dual twist and a seamless transition.
+    </p>
+
+    <div class="price">$115.99</div>
+
+    <div class="buttons">
+      <button class="buy">Buy Now</button>
+      <button class="cart">Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<a href="rings.html" class="back">← Back </a>
+
+<script>
+function changeImage(src) {
+  const img = document.getElementById("mainImage");
+  img.style.opacity = 0;
+
+  setTimeout(() => {
+    img.src = src;
+    img.style.opacity = 1;
+  }, 100);
+}
+</script>
+
+</body>
+</html>
