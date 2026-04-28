@@ -17,6 +17,25 @@
       text-align: center;
     }
 
+    .product {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .product img {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .product-name {
+      font-size: 20px;
+    }
+
+    .product-price {
+      color: gold;
+      margin-top: 5px;
+    }
+
     .form {
       max-width: 500px;
       margin: auto;
@@ -38,6 +57,7 @@
       border: none;
       font-weight: bold;
       margin-top: 20px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -45,6 +65,9 @@
 <body>
 
 <h1>Shipping Details</h1>
+
+<!-- 🔥 PRODUCT DISPLAY -->
+<div id="productDisplay" class="product"></div>
 
 <div class="form">
   <input placeholder="Full Name">
@@ -55,6 +78,18 @@
 
   <button>Place Order</button>
 </div>
+
+<script>
+const product = JSON.parse(localStorage.getItem("checkoutProduct"));
+
+if (product) {
+  document.getElementById("productDisplay").innerHTML = `
+    <img src="${product.image}">
+    <div class="product-name">${product.name}</div>
+    <div class="product-price">$${product.price}</div>
+  `;
+}
+</script>
 
 </body>
 </html>
