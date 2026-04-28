@@ -36,7 +36,6 @@
       max-width: 400px;
     }
 
-    /* 🔥 NEW: LOCKED IMAGE FRAME */
     .main-image-container {
       width: 100%;
       height: 400px;
@@ -104,6 +103,12 @@
       border: 1px solid white;
     }
 
+    /* 🔥 Animation */
+    .cart.animate {
+      transform: scale(1.5);
+      transition: 0.2s;
+    }
+
     .back {
       display: block;
       text-align: center;
@@ -125,7 +130,6 @@
   <!-- LEFT: IMAGES -->
   <div class="images">
 
-    <!-- 🔥 UPDATED IMAGE WRAPPER -->
     <div class="main-image-container">
       <img id="mainImage" src="heartring4.jpg">
     </div>
@@ -149,31 +153,19 @@
     <div class="price">$219.99</div>
 
     <div class="buttons">
-      <button class="buy" onclick="buyNow()">Buy Now</button>
-      <button class="cart">Add to Cart</button>
+      <button class="buy" onclick="buyNow('Silver Heart Ring', 219.99, 'heartring4.jpg')">
+        Buy Now
+      </button>
+      <button class="cart" onclick="addToCart(this)">Add to Cart</button>
     </div>
   </div>
 
-<script>
-    function buyNow() {
-      window.location.href = "checkout.html";
-    }
-</script></div>
+</div> <!-- ✅ FIXED: closed container -->
 
 <a href="rings.html" class="back">← Back</a>
 
 <script>
-function changeImage(src) {
-  const img = document.getElementById("mainImage");
-  img.style.opacity = 0;
-
-  setTimeout(() => {
-    img.src = src;
-    img.style.opacity = 1;
-  }, 100);
-}
-</script>
-<script>
+// IMAGE SWITCH
 function changeImage(src) {
   const img = document.getElementById("mainImage");
   img.style.opacity = 0;
@@ -184,12 +176,19 @@ function changeImage(src) {
   }, 100);
 }
 
-// 🔥 BUY NOW → redirect
-function buyNow() {
+// BUY NOW → save product + redirect
+function buyNow(name, price, image) {
+  const product = {
+    name: name,
+    price: price,
+    image: image
+  };
+
+  localStorage.setItem("checkoutProduct", JSON.stringify(product));
   window.location.href = "checkout.html";
 }
 
-// 🔥 ADD TO CART animation
+// ADD TO CART animation
 function addToCart(button) {
   button.classList.add("animate");
 
@@ -198,5 +197,6 @@ function addToCart(button) {
   }, 200);
 }
 </script>
+
 </body>
 </html>
