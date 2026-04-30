@@ -16,10 +16,34 @@
       text-align: center;
       padding: 30px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative; /* 🔥 needed for cart icon */
     }
 
     header img {
       max-width: 150px;
+    }
+
+    /* 🔥 CART ICON */
+    .cart-icon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-icon span {
+      background: gold;
+      color: black;
+      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 50%;
+      margin-left: 5px;
+    }
+
+    .cart-bounce {
+      transform: scale(1.4);
+      transition: 0.2s;
     }
 
     .container {
@@ -31,7 +55,6 @@
       align-items: flex-start;
     }
 
-    /* IMAGE SECTION */
     .images {
       max-width: 400px;
     }
@@ -65,7 +88,6 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* PRODUCT INFO */
     .info {
       max-width: 400px;
     }
@@ -103,7 +125,6 @@
       border: 1px solid white;
     }
 
-    /* 🔥 Animation */
     .cart.animate {
       transform: scale(1.5);
       transition: 0.2s;
@@ -123,6 +144,11 @@
 
 <header>
   <img src="FullLogo.png">
+
+  <!-- 🔥 CART ICON -->
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cartCount">0</span>
+  </div>
 </header>
   
 <div class="container">
@@ -160,7 +186,7 @@
     </div>
   </div>
 
-</div> <!-- ✅ FIXED: closed container -->
+</div>
 
 <a href="rings.html" class="back">← Back</a>
 
@@ -176,26 +202,50 @@ function changeImage(src) {
   }, 100);
 }
 
-// BUY NOW → save product + redirect
+// BUY NOW
 function buyNow(name, price, image) {
-  const product = {
-    name: name,
-    price: price,
-    image: image
-  };
-
+  const product = { name, price, image };
   localStorage.setItem("checkoutProduct", JSON.stringify(product));
   window.location.href = "checkout.html";
 }
 
-// ADD TO CART animation
+// ADD TO CART
 function addToCart(button) {
-  button.classList.add("animate");
+  const product = {
+    name: "Silver Heart Ring",
+    price: 219.99,
+    image: "heartring4.jpg"
+  };
 
-  setTimeout(() => {
-    button.classList.remove("animate");
-  }, 27 );
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+
+  // button animation
+  button.classList.add("animate");
+  setTimeout(() => button.classList.remove("animate"), 200);
+
+  // cart icon animation
+  const icon = document.querySelector(".cart-icon");
+  icon.classList.add("cart-bounce");
+  setTimeout(() => icon.classList.remove("cart-bounce"), 200);
 }
+
+// UPDATE COUNT
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+// GO TO CART PAGE
+function goToCart() {
+  window.location.href = "cart.html";
+}
+
+// LOAD COUNT ON PAGE LOAD
+updateCartCount();
 </script>
 
 </body>
