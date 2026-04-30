@@ -34,6 +34,27 @@
       color: gold;
     }
 
+    /* 🔥 REMOVE BUTTON */
+    .remove-btn {
+      width: 18px;
+      height: 18px;
+      background: #777;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .remove-btn::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 2px;
+      background: black;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     .total {
       text-align: center;
       margin-top: 30px;
@@ -69,22 +90,36 @@ let total = 0;
 
 const container = document.getElementById("cartItems");
 
-cart.forEach(item => {
+cart.forEach((item, index) => {  // ✅ FIXED
   total += item.price;
 
   container.innerHTML += `
     <div class="item">
       <img src="${item.image}">
-      <div>
+      
+      <div style="flex:1;">
         <div>${item.name}</div>
         <div class="price">$${item.price}</div>
       </div>
+
+      <div class="remove-btn" onclick="removeItem(${index})"></div>
     </div>
   `;
 });
 
 document.getElementById("totalPrice").innerText = "Total: $" + total.toFixed(2);
 
+// 🔥 REMOVE ITEM
+function removeItem(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  location.reload(); // refresh page
+}
+
+// GO TO CHECKOUT
 function goToCheckout() {
   window.location.href = "checkout.html";
 }
