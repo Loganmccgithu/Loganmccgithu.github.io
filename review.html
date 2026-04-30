@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Review Order - KingsCraft</title>
+
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: Georgia, serif;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e2bc6c;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+
+    img {
+      width: 80px;
+    }
+
+    select {
+      background: #111;
+      color: white;
+      border: 1px solid #333;
+      padding: 5px;
+    }
+
+    .remove {
+      margin-left: auto;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .remove:hover {
+      color: red;
+    }
+
+    .total {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Review Your Order</h1>
+
+<div id="items"></div>
+<div class="total" id="total"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const container = document.getElementById("items");
+let total = 0;
+
+function render() {
+  container.innerHTML = "";
+  total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    container.innerHTML += `
+      <div class="item">
+        <img src="${item.image}">
+        
+        <div>
+          <div>${item.name}</div>
+          <div>$${item.price}</div>
+
+          <select>
+            <option>Size 6</option>
+            <option>Size 7</option>
+            <option>Size 8</option>
+            <option>Size 9</option>
+          </select>
+        </div>
+
+        <div class="remove" onclick="removeItem(${index})">✕</div>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = "Total: $" + total.toFixed(2);
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
