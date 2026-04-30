@@ -53,18 +53,24 @@
     button {
       width: 100%;
       padding: 15px;
-      background: gold;
       border: none;
       font-weight: bold;
       margin-top: 20px;
       cursor: pointer;
     }
 
-    /* 🔥 disabled state */
-    button:disabled {
+    /* 🔥 Disabled state */
+    .disabled {
       background: #555;
       color: #999;
       cursor: not-allowed;
+    }
+
+    /* 🔥 Active state */
+    .active {
+      background: gold;
+      color: black;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -73,7 +79,7 @@
 
 <h1>Shipping Details</h1>
 
-<!-- 🔥 PRODUCT DISPLAY -->
+<!-- PRODUCT DISPLAY -->
 <div id="productDisplay" class="product"></div>
 
 <div class="form">
@@ -83,45 +89,59 @@
   <input id="postal" placeholder="Postal Code">
   <input id="email" placeholder="Email">
 
-  <button id="placeOrderBtn" disabled>Place Order</button>
+  <button id="placeOrderBtn" class="disabled" disabled onclick="placeOrder()">Place Order</button>
 </div>
 
 <script>
-// 🔥 LOAD PRODUCT (your existing logic)
-const product = JSON.parse(localStorage.getItem("checkoutProduct"));
+// 🔥 LOAD PRODUCT (buy now OR cart)
+const singleProduct = JSON.parse(localStorage.getItem("checkoutProduct"));
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-if (product) {
-  document.getElementById("productDisplay").innerHTML = `
-    <img src="${product.image}">
-    <div class="product-name">${product.name}</div>
-    <div class="product-price">$${product.price}</div>
+const display = document.getElementById("productDisplay");
+
+// Show single product OR cart preview
+if (singleProduct) {
+  display.innerHTML = `
+    <img src="${singleProduct.image}">
+    <div class="product-name">${singleProduct.name}</div>
+    <div class="product-price">$${singleProduct.price}</div>
   `;
+} else if (cart.length > 0) {
+  display.innerHTML = `<div>${cart.length} item(s) in cart</div>`;
 }
 
 // 🔥 FORM VALIDATION
-const inputs = [
-  document.getElementById("name"),
-  document.getElementById("address"),
-  document.getElementById("city"),
-  document.getElementById("postal"),
-  document.getElementById("email")
-];
-
+const inputs = document.querySelectorAll("input");
 const button = document.getElementById("placeOrderBtn");
-
-function checkForm() {
-  const allFilled = inputs.every(input => input.value.trim() !== "");
-  button.disabled = !allFilled;
-}
 
 inputs.forEach(input => {
   input.addEventListener("input", checkForm);
 });
 
-// 🔥 GO TO REVIEW PAGE
-button.addEventListener("click", () => {
+function checkForm() {
+  let filled = true;
+
+  inputs.forEach(input => {
+    if (input.value.trim() === "") {
+      filled = false;
+    }
+  });
+
+  if (filled) {
+    button.disabled = false;
+    button.classList.remove("disabled");
+    button.classList.add("active");
+  } else {
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.classList.remove("active");
+  }
+}
+
+// 🔥 PLACE ORDER → go to review page
+function placeOrder() {
   window.location.href = "review.html";
-});
+}
 </script>
 
 </body>
