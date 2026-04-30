@@ -59,6 +59,13 @@
       margin-top: 20px;
       cursor: pointer;
     }
+
+    /* 🔥 disabled state */
+    button:disabled {
+      background: #555;
+      color: #999;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
@@ -70,16 +77,17 @@
 <div id="productDisplay" class="product"></div>
 
 <div class="form">
-  <input placeholder="Full Name">
-  <input placeholder="Address">
-  <input placeholder="City">
-  <input placeholder="Postal Code">
-  <input placeholder="Email">
+  <input id="name" placeholder="Full Name">
+  <input id="address" placeholder="Address">
+  <input id="city" placeholder="City">
+  <input id="postal" placeholder="Postal Code">
+  <input id="email" placeholder="Email">
 
-  <button>Place Order</button>
+  <button id="placeOrderBtn" disabled>Place Order</button>
 </div>
 
 <script>
+// 🔥 LOAD PRODUCT (your existing logic)
 const product = JSON.parse(localStorage.getItem("checkoutProduct"));
 
 if (product) {
@@ -89,6 +97,31 @@ if (product) {
     <div class="product-price">$${product.price}</div>
   `;
 }
+
+// 🔥 FORM VALIDATION
+const inputs = [
+  document.getElementById("name"),
+  document.getElementById("address"),
+  document.getElementById("city"),
+  document.getElementById("postal"),
+  document.getElementById("email")
+];
+
+const button = document.getElementById("placeOrderBtn");
+
+function checkForm() {
+  const allFilled = inputs.every(input => input.value.trim() !== "");
+  button.disabled = !allFilled;
+}
+
+inputs.forEach(input => {
+  input.addEventListener("input", checkForm);
+});
+
+// 🔥 GO TO REVIEW PAGE
+button.addEventListener("click", () => {
+  window.location.href = "review.html";
+});
 </script>
 
 </body>
