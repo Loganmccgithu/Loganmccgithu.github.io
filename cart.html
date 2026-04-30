@@ -34,7 +34,6 @@
       color: gold;
     }
 
-    /* 🔥 REMOVE BUTTON */
     .remove-btn {
       width: 18px;
       height: 18px;
@@ -71,6 +70,13 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    /* 🔥 Disabled style */
+    .checkout-btn:disabled {
+      background: #555;
+      color: #999;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
@@ -82,47 +88,62 @@
 
 <div class="total" id="totalPrice"></div>
 
-<button class="checkout-btn" onclick="goToCheckout()">Checkout</button>
+<button id="checkoutBtn" class="checkout-btn" onclick="goToCheckout()">Checkout</button>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let total = 0;
 
 const container = document.getElementById("cartItems");
+const totalDisplay = document.getElementById("totalPrice");
+const checkoutBtn = document.getElementById("checkoutBtn");
 
-cart.forEach((item, index) => {  // ✅ FIXED
-  total += item.price;
+// 🔥 RENDER FUNCTION
+function renderCart() {
+  container.innerHTML = "";
+  let total = 0;
 
-  container.innerHTML += `
-    <div class="item">
-      <img src="${item.image}">
-      
-      <div style="flex:1;">
-        <div>${item.name}</div>
-        <div class="price">$${item.price}</div>
+  if (cart.length === 0) {
+    container.innerHTML = "<p style='text-align:center;color:#777;'>Your cart is empty</p>";
+  }
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    container.innerHTML += `
+      <div class="item">
+        <img src="${item.image}">
+        
+        <div style="flex:1;">
+          <div>${item.name}</div>
+          <div class="price">$${item.price}</div>
+        </div>
+
+        <div class="remove-btn" onclick="removeItem(${index})"></div>
       </div>
+    `;
+  });
 
-      <div class="remove-btn" onclick="removeItem(${index})"></div>
-    </div>
-  `;
-});
+  totalDisplay.innerText = "Total: $" + total.toFixed(2);
 
-document.getElementById("totalPrice").innerText = "Total: $" + total.toFixed(2);
+  // 🔥 Disable button if empty
+  checkoutBtn.disabled = cart.length === 0;
+}
 
-// 🔥 REMOVE ITEM
+// 🔥 REMOVE ITEM (NO REFRESH)
 function removeItem(index) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
-
-  location.reload(); // refresh page
+  renderCart();
 }
 
-// GO TO CHECKOUT
+// 🔥 SAFE CHECKOUT
 function goToCheckout() {
+  if (cart.length === 0) return; // block if empty
   window.location.href = "checkout.html";
 }
+
+// INITIAL LOAD
+renderCart();
 </script>
 
 </body>
