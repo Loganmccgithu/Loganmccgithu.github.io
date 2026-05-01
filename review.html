@@ -63,6 +63,7 @@
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let singleProduct = JSON.parse(localStorage.getItem("checkoutProduct"));
 
 const container = document.getElementById("items");
 let total = 0;
@@ -71,16 +72,59 @@ function render() {
   container.innerHTML = "";
   total = 0;
 
-  cart.forEach((item, index) => {
-    total += item.price;
+  // 🔥 CASE 1: CART ITEMS
+  if (cart.length > 0) {
+    cart.forEach((item, index) => {
+      total += item.price;
 
-    container.innerHTML += `
+      container.innerHTML += `
+        <div class="item">
+          <img src="${item.image}">
+          
+          <div>
+            <div>${item.name}</div>
+            <div>$${item.price}</div>
+
+            <select>
+              <option>Size 4</option>
+              <option>Size 4 1/2</option>
+              <option>Size 5</option>
+              <option>Size 5 1/2</option>
+              <option>Size 6</option>
+              <option>Size 6 1/2</option>
+              <option>Size 7</option>
+              <option>Size 7 1/2</option>
+              <option>Size 8</option>
+              <option>Size 8 1/2</option>
+              <option>Size 9</option>
+              <option>Size 9 1/2</option>
+              <option>Size 10</option>
+              <option>Size 10 1/2</option>
+              <option>Size 11</option>
+              <option>Size 11 1/2</option>
+              <option>Size 12</option>
+              <option>Size 12 1/2</option>
+              <option>Size 13</option>
+            </select>
+          </div>
+
+          <div class="remove" onclick="removeItem(${index})">✕</div>
+        </div>
+      `;
+    });
+  }
+
+  // 🔥 CASE 2: BUY NOW (single product)
+  else if (singleProduct) {
+    total = singleProduct.price;
+
+    container.innerHTML = `
       <div class="item">
-        <img src="${item.image}">
+        <img src="${singleProduct.image}">
         
         <div>
-          <div>${item.name}</div>
-          <div>$${item.price}</div>
+          <div>${singleProduct.name}</div>
+          <div>$${singleProduct.price}</div>
 
           <select>
             <option>Size 4</option>
@@ -104,20 +148,22 @@ function render() {
             <option>Size 13</option>
           </select>
         </div>
-
-        <div class="remove" onclick="removeItem(${index})">✕</div>
       </div>
     `;
-  });
+  }
 
   document.getElementById("total").innerText = "Total: $" + total.toFixed(2);
 }
 
+// 🔥 REMOVE (only works for cart items)
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   render();
 }
+
+// 🔥 OPTIONAL: clear single product after load
+localStorage.removeItem("checkoutProduct");
 
 render();
 </script>
