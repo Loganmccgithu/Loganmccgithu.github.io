@@ -130,6 +130,8 @@ function render() {
     cart.forEach((item, index) => {
       total += item.price;
 
+      const type = item.type || "ring"; // ✅ FIX ADDED
+
       container.innerHTML += `
         <div class="item">
           <img src="${item.image}">
@@ -138,7 +140,7 @@ function render() {
             <div>${item.name}</div>
             <div>$${item.price}</div>
 
-            ${getSizeOptions(item.type)}
+            ${getSizeOptions(type)}
           </div>
 
           <div class="remove" onclick="removeItem(${index})">✕</div>
@@ -151,6 +153,8 @@ function render() {
   else if (singleProduct) {
     total = singleProduct.price;
 
+    const type = singleProduct.type || "ring"; // ✅ FIX ADDED
+
     container.innerHTML = `
       <div class="item">
         <img src="${singleProduct.image}">
@@ -159,7 +163,7 @@ function render() {
           <div>${singleProduct.name}</div>
           <div>$${singleProduct.price}</div>
 
-          ${getSizeOptions(singleProduct.type)}
+          ${getSizeOptions(type)}
         </div>
       </div>
     `;
