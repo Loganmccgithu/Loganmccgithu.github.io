@@ -179,7 +179,7 @@
     <div class="price">$219.99</div>
 
     <div class="buttons">
-      <button class="buy" onclick="buyNow('Silver Heart Ring', 219.99, 'heartring4.jpg')">
+      <button class="buy" onclick="buyNow('Silver Heart Ring', 219.99, 'heartring4.jpg', 'ring')">
         Buy Now
       </button>
       <button class="cart" onclick="addToCart(this)">Add to Cart</button>
@@ -214,7 +214,8 @@ function addToCart(button) {
   const product = {
     name: "Silver Heart Ring",
     price: 219.99,
-    image: "heartring4.jpg"
+    image: "heartring4.jpg",
+    type: "ring" // 🔥 ADD THIS
   };
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];

@@ -68,11 +68,64 @@ let singleProduct = JSON.parse(localStorage.getItem("checkoutProduct"));
 const container = document.getElementById("items");
 let total = 0;
 
+// 🔥 SIZE OPTIONS BASED ON PRODUCT TYPE
+function getSizeOptions(type) {
+  if (type === "ring") {
+    return `
+      <select>
+        <option>Size 4</option>
+        <option>Size 4 1/2</option>
+        <option>Size 5</option>
+        <option>Size 5 1/2</option>
+        <option>Size 6</option>
+        <option>Size 6 1/2</option>
+        <option>Size 7</option>
+        <option>Size 7 1/2</option>
+        <option>Size 8</option>
+        <option>Size 8 1/2</option>
+        <option>Size 9</option>
+        <option>Size 9 1/2</option>
+        <option>Size 10</option>
+        <option>Size 10 1/2</option>
+        <option>Size 11</option>
+        <option>Size 11 1/2</option>
+        <option>Size 12</option>
+        <option>Size 12 1/2</option>
+        <option>Size 13</option>
+      </select>
+    `;
+  }
+
+  if (type === "chain") {
+    return `
+      <select>
+        <option>22"</option>
+        <option>24"</option>
+        <option>26"</option>
+        <option>28"</option>
+      </select>
+    `;
+  }
+
+  if (type === "clothing") {
+    return `
+      <select>
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+      </select>
+    `;
+  }
+
+  return `<select><option>Standard</option></select>`;
+}
+
+// 🔥 RENDER FUNCTION
 function render() {
   container.innerHTML = "";
   total = 0;
 
-  // 🔥 CASE 1: CART ITEMS
+  // 🔥 CASE 1: CART
   if (cart.length > 0) {
     cart.forEach((item, index) => {
       total += item.price;
@@ -85,27 +138,7 @@ function render() {
             <div>${item.name}</div>
             <div>$${item.price}</div>
 
-            <select>
-              <option>Size 4</option>
-              <option>Size 4 1/2</option>
-              <option>Size 5</option>
-              <option>Size 5 1/2</option>
-              <option>Size 6</option>
-              <option>Size 6 1/2</option>
-              <option>Size 7</option>
-              <option>Size 7 1/2</option>
-              <option>Size 8</option>
-              <option>Size 8 1/2</option>
-              <option>Size 9</option>
-              <option>Size 9 1/2</option>
-              <option>Size 10</option>
-              <option>Size 10 1/2</option>
-              <option>Size 11</option>
-              <option>Size 11 1/2</option>
-              <option>Size 12</option>
-              <option>Size 12 1/2</option>
-              <option>Size 13</option>
-            </select>
+            ${getSizeOptions(item.type)}
           </div>
 
           <div class="remove" onclick="removeItem(${index})">✕</div>
@@ -114,7 +147,7 @@ function render() {
     });
   }
 
-  // 🔥 CASE 2: BUY NOW (single product)
+  // 🔥 CASE 2: BUY NOW
   else if (singleProduct) {
     total = singleProduct.price;
 
@@ -126,27 +159,7 @@ function render() {
           <div>${singleProduct.name}</div>
           <div>$${singleProduct.price}</div>
 
-          <select>
-            <option>Size 4</option>
-            <option>Size 4 1/2</option>
-            <option>Size 5</option>
-            <option>Size 5 1/2</option>
-            <option>Size 6</option>
-            <option>Size 6 1/2</option>
-            <option>Size 7</option>
-            <option>Size 7 1/2</option>
-            <option>Size 8</option>
-            <option>Size 8 1/2</option>
-            <option>Size 9</option>
-            <option>Size 9 1/2</option>
-            <option>Size 10</option>
-            <option>Size 10 1/2</option>
-            <option>Size 11</option>
-            <option>Size 11 1/2</option>
-            <option>Size 12</option>
-            <option>Size 12 1/2</option>
-            <option>Size 13</option>
-          </select>
+          ${getSizeOptions(singleProduct.type)}
         </div>
       </div>
     `;
@@ -155,16 +168,17 @@ function render() {
   document.getElementById("total").innerText = "Total: $" + total.toFixed(2);
 }
 
-// 🔥 REMOVE (only works for cart items)
+// 🔥 REMOVE ITEM (cart only)
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   render();
 }
 
-// 🔥 OPTIONAL: clear single product after load
+// 🔥 CLEAR BUY NOW ITEM AFTER USE
 localStorage.removeItem("checkoutProduct");
 
+// INIT
 render();
 </script>
 
