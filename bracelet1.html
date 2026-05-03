@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Flexible Silver Bracelet</title>
+  <title>Flexible Silver Foxtail Bracelet</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -16,10 +16,34 @@
       text-align: center;
       padding: 30px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative; /* 🔥 needed for cart icon */
     }
 
     header img {
       max-width: 150px;
+    }
+
+    /* 🔥 CART ICON */
+    .cart-icon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-icon span {
+      background: gold;
+      color: black;
+      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 50%;
+      margin-left: 5px;
+    }
+
+    .cart-bounce {
+      transform: scale(1.4);
+      transition: transform 0.5s ease; /* smooth return */
     }
 
     .container {
@@ -31,12 +55,10 @@
       align-items: flex-start;
     }
 
-    /* IMAGE SECTION */
     .images {
       max-width: 400px;
     }
 
-    /* 🔥 NEW: LOCKED IMAGE FRAME */
     .main-image-container {
       width: 100%;
       height: 400px;
@@ -66,7 +88,6 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* PRODUCT INFO */
     .info {
       max-width: 400px;
     }
@@ -104,20 +125,40 @@
       border: 1px solid white;
     }
 
-    .back {
-      display: block;
-      text-align: center;
-      margin: 40px;
+    .cart.animate {
+      transform: scale(1.15);
+      transition: transform 0.5s ease; /* smooth return */
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
       color: #ccc;
       text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
     }
   </style>
 </head>
 
 <body>
 
+<a href="bracelets.html" class="back-btn">←</a>
+
 <header>
   <img src="FullLogo.png">
+
+  <!-- 🔥 CART ICON -->
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cartCount">0</span>
+  </div>
 </header>
   
 <div class="container">
@@ -125,7 +166,6 @@
   <!-- LEFT: IMAGES -->
   <div class="images">
 
-    <!-- 🔥 UPDATED IMAGE WRAPPER -->
     <div class="main-image-container">
       <img id="mainImage" src="bracelet2.png">
     </div>
@@ -139,26 +179,27 @@
 
   <!-- RIGHT: INFO -->
   <div class="info">
-    <h2>Silver Heart Ring</h2>
+    <h2>Flexible Silver Foxtail Bracelet</h2>
 
     <p>
-      A handmade flexible, stirling silver, rectangular foxtail, bracelet.
-      the clasp design shown is an old version, new version may be different. 
+      A handmade flexible, stirling silver, double foxtail, bracelet.
+      the clasp design shown is an old version, new version may be different.
     </p>
 
     <div class="price">$680.99</div>
 
     <div class="buttons">
-      <button class="buy">Buy Now</button>
-      <button class="cart">Add to Cart</button>
+      <button class="buy" onclick="buyNow('Silver Heart Ring', 219.99, 'heartring4.jpg', 'ring')">
+        Buy Now
+      </button>
+      <button class="cart" onclick="addToCart(this)">Add to Cart</button>
     </div>
   </div>
 
 </div>
 
-<a href="bracelets.html" class="back">← Back</a>
-
 <script>
+// IMAGE SWITCH
 function changeImage(src) {
   const img = document.getElementById("mainImage");
   img.style.opacity = 0;
@@ -168,6 +209,52 @@ function changeImage(src) {
     img.style.opacity = 1;
   }, 100);
 }
+
+// BUY NOW
+function buyNow(name, price, image) {
+  const product = { name, price, image };
+  localStorage.setItem("checkoutProduct", JSON.stringify(product));
+  window.location.href = "checkout.html";
+}
+
+// ADD TO CART
+function addToCart(button) {
+  const product = {
+    name: "Flexible Silver Foxtail Bracelet",
+    price: 680.99,
+    image: "bracelet2.png",
+    type: "clothing" // 🔥 ADD THIS
+  };
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+
+  // button animation
+  button.classList.add("animate");
+  setTimeout(() => button.classList.remove("animate"), 200);
+
+  // cart icon animation
+  const icon = document.querySelector(".cart-icon");
+  icon.classList.add("cart-bounce");
+  setTimeout(() => icon.classList.remove("cart-bounce"), 200);
+}
+
+// UPDATE COUNT
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+// GO TO CART PAGE
+function goToCart() {
+  window.location.href = "cart.html";
+}
+
+// LOAD COUNT ON PAGE LOAD
+updateCartCount();
 </script>
 
 </body>
