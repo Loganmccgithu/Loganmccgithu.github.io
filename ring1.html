@@ -130,14 +130,20 @@
       transition: transform 0.5s ease; /* smooth return */
     }
 
-    .back {
+    .back-btn {
       position: fixed;
       top: 20px;
       left: 20px;
+      font-size: 28px;
       color: #ccc;
       text-decoration: none;
-      font-size: 32px;
       z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
     }
   </style>
 </head>
