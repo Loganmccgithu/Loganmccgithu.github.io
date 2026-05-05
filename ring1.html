@@ -212,9 +212,12 @@ function changeImage(src) {
 
 // BUY NOW
 function buyNow(name, price, image) {
+  // (optional) still store product in case you use it later
   const product = { name, price, image };
   localStorage.setItem("checkoutProduct", JSON.stringify(product));
-  window.location.href = "checkout.html";
+
+  // 🔥 redirect directly to Stripe
+  window.location.href = "https://buy.stripe.com/eVq7sM5xU8Tx2ygg9gb7y00";
 }
 
 // ADD TO CART
