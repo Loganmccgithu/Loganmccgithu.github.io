@@ -137,12 +137,12 @@ function removeItem(index) {
 }
 
 async function goToCheckout() {
-  console.log("CLICKED CHECKOUT");
+  alert("CLICKED"); // 👈 ADD THIS
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    console.log("Cart is empty");
+    alert("Cart is empty");
     return;
   }
 
@@ -155,11 +155,7 @@ async function goToCheckout() {
       body: JSON.stringify({ cart })
     });
 
-    console.log("Response:", response);
-
     const data = await response.json();
-    console.log("Stripe URL:", data.url);
-
     window.location.href = data.url;
 
   } catch (err) {
