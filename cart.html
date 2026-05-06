@@ -136,10 +136,23 @@ function removeItem(index) {
   renderCart();
 }
 
-// 🔥 SAFE CHECKOUT
-function goToCheckout() {
-  if (cart.length === 0) return; // block if empty
-  window.location.href = "checkout.html";
+async function goToCheckout() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) return;
+
+  const response = await fetch("http://localhost:3000/create-checkout-session", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ cart })
+  });
+
+  const data = await response.json();
+
+  // 🚀 Redirect to Stripe Checkout
+  window.location.href = data.url;
 }
 
 // INITIAL LOAD
