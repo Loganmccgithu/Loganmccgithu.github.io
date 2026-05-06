@@ -147,7 +147,7 @@ async function goToCheckout() {
   }
 
   try {
-    const response = await fetch("https://kingscraft-backend.onrender.com", {
+    const response = await fetch("https://kingscraft-backend.onrender.com/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
