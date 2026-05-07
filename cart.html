@@ -34,6 +34,14 @@
       color: gold;
     }
 
+    select {
+      margin-top: 8px;
+      padding: 6px;
+      background: #111;
+      color: white;
+      border: 1px solid #333;
+    }
+
     .remove-btn {
       width: 18px;
       height: 18px;
@@ -71,7 +79,6 @@
       cursor: pointer;
     }
 
-    /* 🔥 Disabled style */
     .checkout-btn:disabled {
       background: #555;
       color: #999;
@@ -97,6 +104,25 @@ const container = document.getElementById("cartItems");
 const totalDisplay = document.getElementById("totalPrice");
 const checkoutBtn = document.getElementById("checkoutBtn");
 
+function sizeOptions(selectedSize) {
+  const sizes = [
+    "Size 4", "Size 4 1/2",
+    "Size 5", "Size 5 1/2",
+    "Size 6", "Size 6 1/2",
+    "Size 7", "Size 7 1/2",
+    "Size 8", "Size 8 1/2",
+    "Size 9", "Size 9 1/2",
+    "Size 10", "Size 10 1/2",
+    "Size 11", "Size 11 1/2",
+    "Size 12", "Size 12 1/2",
+    "Size 13"
+  ];
+
+  return sizes.map(size => {
+    return `<option value="${size}" ${selectedSize === size ? "selected" : ""}>${size}</option>`;
+  }).join("");
+}
+
 // 🔥 RENDER FUNCTION
 function renderCart() {
   container.innerHTML = "";
@@ -109,6 +135,10 @@ function renderCart() {
   cart.forEach((item, index) => {
     total += item.price;
 
+    if (!item.size) {
+      item.size = "Size 4";
+    }
+
     container.innerHTML += `
       <div class="item">
         <img src="${item.image}">
@@ -116,6 +146,10 @@ function renderCart() {
         <div style="flex:1;">
           <div>${item.name}</div>
           <div class="price">$${item.price}</div>
+
+          <select onchange="updateSize(${index}, this.value)">
+            ${sizeOptions(item.size)}
+          </select>
         </div>
 
         <div class="remove-btn" onclick="removeItem(${index})"></div>
@@ -123,10 +157,17 @@ function renderCart() {
     `;
   });
 
+  localStorage.setItem("cart", JSON.stringify(cart));
+
   totalDisplay.innerText = "Total: $" + total.toFixed(2);
 
-  // 🔥 Disable button if empty
   checkoutBtn.disabled = cart.length === 0;
+}
+
+// 🔥 SAVE SIZE CHANGE
+function updateSize(index, size) {
+  cart[index].size = size;
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 // 🔥 REMOVE ITEM (NO REFRESH)
@@ -137,8 +178,6 @@ function removeItem(index) {
 }
 
 async function goToCheckout() {
-  alert("CLICKED"); // 👈 ADD THIS
-
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
