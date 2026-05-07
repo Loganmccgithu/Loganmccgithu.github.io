@@ -1,3 +1,8 @@
+Yes — the issue is your code calls `updateCartCount()` but that function is missing. I added it back and kept everything else the same. 
+
+Replace your file with this:
+
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -189,30 +194,30 @@
     <div class="price">$219.99</div>
 
     <div style="margin-top:15px;">
-  <label style="display:block; margin-bottom:5px;">Select Size:</label>
+      <label style="display:block; margin-bottom:5px;">Select Size:</label>
 
-  <select id="sizeSelect" style="padding:8px; background:#111; color:white; border:1px solid #333;">
-    <option value="Size 4">Size 4</option>
-    <option value="Size 4 1/2">Size 4 1/2</option>
-    <option value="Size 5">Size 5</option>
-    <option value="Size 5 1/2">Size 5 1/2</option>
-    <option value="Size 6">Size 6</option>
-    <option value="Size 6 1/2">Size 6 1/2</option>
-    <option value="Size 7">Size 7</option>
-    <option value="Size 7 1/2">Size 7 1/2</option>
-    <option value="Size 8">Size 8</option>
-    <option value="Size 8 1/2">Size 8 1/2</option>
-    <option value="Size 9">Size 9</option>
-    <option value="Size 9 1/2">Size 9 1/2</option>
-    <option value="Size 10">Size 10</option>
-    <option value="Size 10 1/2">Size 10 1/2</option>
-    <option value="Size 11">Size 11</option>
-    <option value="Size 11 1/2">Size 11 1/2</option>
-    <option value="Size 12">Size 12</option>
-    <option value="Size 12 1/2">Size 12 1/2</option>
-    <option value="Size 13">Size 13</option>
-  </select>
-</div>
+      <select id="sizeSelect" style="padding:8px; background:#111; color:white; border:1px solid #333;">
+        <option value="Size 4">Size 4</option>
+        <option value="Size 4 1/2">Size 4 1/2</option>
+        <option value="Size 5">Size 5</option>
+        <option value="Size 5 1/2">Size 5 1/2</option>
+        <option value="Size 6">Size 6</option>
+        <option value="Size 6 1/2">Size 6 1/2</option>
+        <option value="Size 7">Size 7</option>
+        <option value="Size 7 1/2">Size 7 1/2</option>
+        <option value="Size 8">Size 8</option>
+        <option value="Size 8 1/2">Size 8 1/2</option>
+        <option value="Size 9">Size 9</option>
+        <option value="Size 9 1/2">Size 9 1/2</option>
+        <option value="Size 10">Size 10</option>
+        <option value="Size 10 1/2">Size 10 1/2</option>
+        <option value="Size 11">Size 11</option>
+        <option value="Size 11 1/2">Size 11 1/2</option>
+        <option value="Size 12">Size 12</option>
+        <option value="Size 12 1/2">Size 12 1/2</option>
+        <option value="Size 13">Size 13</option>
+      </select>
+    </div>
 
     <div class="buttons">
       <button class="buy" onclick="buyNow('Silver Heart Ring', 219.99, 'heartring4.jpg', 'ring')">
@@ -296,6 +301,12 @@ function addToCart(button) {
   const icon = document.querySelector(".cart-icon");
   icon.classList.add("cart-bounce");
   setTimeout(() => icon.classList.remove("cart-bounce"), 200);
+}
+
+// UPDATE COUNT
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
 }
 
 // GO TO CART PAGE
