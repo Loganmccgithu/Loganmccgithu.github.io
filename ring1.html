@@ -267,7 +267,14 @@ async function buyNow(name, price, image) {
 
 // ADD TO CART
 function addToCart(button) {
-  const size = document.getElementById("sizeSelect").value;
+  const sizeSelect = document.getElementById("sizeSelect");
+
+  if (!sizeSelect) {
+    alert("Size selector not found.");
+    return;
+  }
+
+  const size = sizeSelect.value;
 
   const product = {
     name: "Silver Heart Ring",
