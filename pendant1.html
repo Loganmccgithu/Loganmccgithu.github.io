@@ -16,10 +16,49 @@
       text-align: center;
       padding: 30px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
     }
 
     header img {
       max-width: 150px;
+    }
+
+    .cart-icon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-icon span {
+      background: gold;
+      color: black;
+      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 50%;
+      margin-left: 5px;
+    }
+
+    .cart-bounce {
+      transform: scale(1.4);
+      transition: transform 0.5s ease;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: #ccc;
+      text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
     }
 
     .container {
@@ -107,8 +146,14 @@
 
 <body>
 
+<a href="PAC.html" class="back-btn">←</a>
+
 <header>
   <img src="FullLogo.png">
+
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cartCount">0</span>
+  </div>
 </header>
 
 <div class="container">
@@ -154,8 +199,6 @@
   </div>
 
 </div>
-
-<a href="PAC.html" class="back">←</a>
 
 <script>
 function changeImage(src) {
@@ -207,11 +250,34 @@ function addToCart(button) {
   cart.push(product);
   localStorage.setItem("cart", JSON.stringify(cart));
 
+  updateCartCount();
+
   if (button) {
     button.classList.add("animate");
     setTimeout(() => button.classList.remove("animate"), 200);
   }
+
+  const icon = document.querySelector(".cart-icon");
+
+  if (icon) {
+    icon.classList.add("cart-bounce");
+    setTimeout(() => icon.classList.remove("cart-bounce"), 200);
+  }
 }
+
+// UPDATE COUNT
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+// GO TO CART PAGE
+function goToCart() {
+  window.location.href = "cart.html";
+}
+
+// LOAD COUNT ON PAGE LOAD
+updateCartCount();
 </script>
 
 </body>
