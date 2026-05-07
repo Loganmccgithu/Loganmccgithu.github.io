@@ -104,20 +104,6 @@ const container = document.getElementById("cartItems");
 const totalDisplay = document.getElementById("totalPrice");
 const checkoutBtn = document.getElementById("checkoutBtn");
 
-function sizeOptions(selectedSize) {
-  const sizes = [
-    "Size 4", "Size 4 1/2",
-    "Size 5", "Size 5 1/2",
-    "Size 6", "Size 6 1/2",
-    "Size 7", "Size 7 1/2",
-    "Size 8", "Size 8 1/2",
-    "Size 9", "Size 9 1/2",
-    "Size 10", "Size 10 1/2",
-    "Size 11", "Size 11 1/2",
-    "Size 12", "Size 12 1/2",
-    "Size 13"
-  ];
-
   return sizes.map(size => {
     return `<option value="${size}" ${selectedSize === size ? "selected" : ""}>${size}</option>`;
   }).join("");
@@ -147,9 +133,8 @@ function renderCart() {
           <div>${item.name}</div>
           <div class="price">$${item.price}</div>
 
-          <select onchange="updateSize(${index}, this.value)">
-            ${sizeOptions(item.size)}
-          </select>
+          <div style="margin-top:8px; color:#ccc;">
+            ${item.size || "Size not selected"}
         </div>
 
         <div class="remove-btn" onclick="removeItem(${index})"></div>
