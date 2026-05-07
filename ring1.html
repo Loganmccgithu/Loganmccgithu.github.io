@@ -190,27 +190,27 @@
 
     <div style="margin-top:15px;">
   <label style="display:block; margin-bottom:5px;">Select Size:</label>
-  
+
   <select id="sizeSelect" style="padding:8px; background:#111; color:white; border:1px solid #333;">
-    <option>Size 4</option>
-    <option>Size 4 1/2</option>
-    <option>Size 5</option>
-    <option>Size 5 1/2</option>
-    <option>Size 6</option>
-    <option>Size 6 1/2</option>
-    <option>Size 7</option>
-    <option>Size 7 1/2</option>
-    <option>Size 8</option>
-    <option>Size 8 1/2</option>
-    <option>Size 9</option>
-    <option>Size 9 1/2</option>
-    <option>Size 10</option>
-    <option>Size 10 1/2</option>
-    <option>Size 11</option>
-    <option>Size 11 1/2</option>
-    <option>Size 12</option>
-    <option>Size 12 1/2</option>
-    <option>Size 13</option>
+    <option value="Size 4">Size 4</option>
+    <option value="Size 4 1/2">Size 4 1/2</option>
+    <option value="Size 5">Size 5</option>
+    <option value="Size 5 1/2">Size 5 1/2</option>
+    <option value="Size 6">Size 6</option>
+    <option value="Size 6 1/2">Size 6 1/2</option>
+    <option value="Size 7">Size 7</option>
+    <option value="Size 7 1/2">Size 7 1/2</option>
+    <option value="Size 8">Size 8</option>
+    <option value="Size 8 1/2">Size 8 1/2</option>
+    <option value="Size 9">Size 9</option>
+    <option value="Size 9 1/2">Size 9 1/2</option>
+    <option value="Size 10">Size 10</option>
+    <option value="Size 10 1/2">Size 10 1/2</option>
+    <option value="Size 11">Size 11</option>
+    <option value="Size 11 1/2">Size 11 1/2</option>
+    <option value="Size 12">Size 12</option>
+    <option value="Size 12 1/2">Size 12 1/2</option>
+    <option value="Size 13">Size 13</option>
   </select>
 </div>
 
@@ -237,22 +237,44 @@ function changeImage(src) {
 }
 
 // BUY NOW
-function buyNow(name, price, image) {
-  // (optional) still store product in case you use it later
-  const product = { name, price, image };
-  localStorage.setItem("checkoutProduct", JSON.stringify(product));
+async function buyNow(name, price, image) {
+  const size = document.getElementById("sizeSelect").value;
 
-  // 🔥 redirect directly to Stripe
-  window.location.href = "https://buy.stripe.com/eVq7sM5xU8Tx2ygg9gb7y00";
+  const cart = [{
+    name,
+    price,
+    image,
+    type: "ring",
+    size: size
+  }];
+
+  try {
+    const response = await fetch("https://kingscraft-backend.onrender.com/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ cart })
+    });
+
+    const data = await response.json();
+    window.location.href = data.url;
+
+  } catch (err) {
+    console.error("ERROR:", err);
+  }
 }
 
 // ADD TO CART
 function addToCart(button) {
+  const size = document.getElementById("sizeSelect").value;
+
   const product = {
     name: "Silver Heart Ring",
     price: 219.99,
     image: "heartring4.jpg",
-    type: "ring" // 🔥 ADD THIS
+    type: "ring",
+    size: size
   };
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -261,20 +283,12 @@ function addToCart(button) {
 
   updateCartCount();
 
-  // button animation
   button.classList.add("animate");
   setTimeout(() => button.classList.remove("animate"), 200);
 
-  // cart icon animation
   const icon = document.querySelector(".cart-icon");
   icon.classList.add("cart-bounce");
   setTimeout(() => icon.classList.remove("cart-bounce"), 200);
-}
-
-// UPDATE COUNT
-function updateCartCount() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  document.getElementById("cartCount").innerText = cart.length;
 }
 
 // GO TO CART PAGE
