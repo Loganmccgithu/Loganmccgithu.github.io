@@ -104,10 +104,6 @@ const container = document.getElementById("cartItems");
 const totalDisplay = document.getElementById("totalPrice");
 const checkoutBtn = document.getElementById("checkoutBtn");
 
-  return sizes.map(size => {
-    return `<option value="${size}" ${selectedSize === size ? "selected" : ""}>${size}</option>`;
-  }).join("");
-}
 
 // 🔥 RENDER FUNCTION
 function renderCart() {
