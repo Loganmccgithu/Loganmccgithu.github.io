@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chains - KingsCraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: black;
+      color: #e2bc6c;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px;
+    }
+
+    header img {
+      max-width: 150px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .product-card {
+      text-decoration: none;
+      color: white;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .price {
+      color: gold;
+      margin-top: 5px;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+      transition: 0.2s;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: #ccc;
+      text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="home.html" class="back-btn">←</a>
+
+<header>
+  <img src="FullLogo.png">
+</header>
+  
+<h1>Chains</h1>
+
+<div class="grid">
+
+  <!-- PRODUCT 1 -->
+  <a href="ring1.html" class="product-card">
+    <img src="heartring4center.jpg">
+    <div class="product-info">
+      <div>Silver Heart Ring</div>
+      <div class="price">$219.99</div>
+    </div>
+  </a>
+
+  <!-- PRODUCT 2 -->
+  <a href="ring2.html" class="product-card">
+    <img src="double2.png">
+    <div class="product-info">
+      <div>Woven Band, pair</div>
+      <div class="price">$380.99</div>
+    </div>
+  </a>
+
+  <!-- PRODUCT 3 -->
+  <a href="ring3.html" class="product-card">
+    <img src="flower2.png">
+    <div class="product-info">
+      <div>Dual Flower Ring</div>
+      <div class="price">$269.99</div>
+    </div>
+  </a>
+
+</div>
+
+</body>
+</html>
