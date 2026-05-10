@@ -22,14 +22,20 @@
     }
 
     .back {
-      position: absolute;
-      top: 30px;
+      position: fixed;
+      top: 20px;
       left: 20px;
-      font-size: 26px;
-      color: #e2bc6c;
+      font-size: 28px;
+      color: #ccc;
       text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
     }
 
+    .back:hover {
+      color: white;
+      transform: translateX(-3px);
+    }
     .container {
       max-width: 800px;
       margin: auto;
