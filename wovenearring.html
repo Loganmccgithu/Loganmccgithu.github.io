@@ -154,6 +154,10 @@
 
 <header>
   <img src="FullLogo.png">
+
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cartCount">0</span>
+  </div>
 </header>
   
 <div class="container">
@@ -186,8 +190,8 @@
     <div class="price">$155.99</div>
 
     <div class="buttons">
-      <button class="buy">Buy Now</button>
-      <button class="cart">Add to Cart</button>
+      <button class="buy" onclick="buyNow('Silver Woven Earrings', 155.99, 'earring2.png')">Buy Now</button>
+      <button class="cart" onclick="addToCart(this)">Add to Cart</button>
     </div>
   </div>
 
@@ -218,7 +222,7 @@ async function buyNow(name, price, image) {
 
   showLoading();
 
-  const size = document.getElementById("sizeSelect").value;
+  const size = "Small";
 
   const cart = [{
     name,
@@ -251,14 +255,7 @@ async function buyNow(name, price, image) {
 
 // ADD TO CART
 function addToCart(button) {
-  const sizeSelect = document.getElementById("sizeSelect");
-
-  if (!sizeSelect) {
-    alert("Size selector not found.");
-    return;
-  }
-
-  const size = sizeSelect.value;
+  const size = "Small";
 
   const product = {
     name: "Silver Woven Earrings",
