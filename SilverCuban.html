@@ -151,6 +151,57 @@
   </style>
 </head>
 
+<!-- LOADING POPUP -->
+<div id="loadingPopup" style="
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
+  font-family:Georgia, serif;
+">
+
+  <div style="
+    width:60px;
+    height:60px;
+    border:5px solid #333;
+    border-top:5px solid gold;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+  "></div>
+
+  <p style="margin-top:20px; font-size:20px;">
+    Preparing Secure Checkout...
+  </p>
+
+  <button onclick="hideLoading()" style="
+    margin-top:25px;
+    background:transparent;
+    border:1px solid white;
+    color:white;
+    padding:10px 20px;
+    cursor:pointer;
+    font-family:Georgia, serif;
+  ">
+    ← Back
+  </button>
+
+</div>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
 <body>
 
 <a href="Chains.html" class="back-btn">←</a>
@@ -236,15 +287,26 @@ function changeImage(src) {
   }, 100);
 }
 
+function showLoading() {
+  document.getElementById("loadingPopup").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loadingPopup").style.display = "none";
+}
+
 // BUY NOW
-async function buyNow(name, price, image) {
+async function buyNow(name, price, image, type) {
+
+  showLoading();
+
   const size = document.getElementById("sizeSelect").value;
 
   const cart = [{
     name,
     price,
     image,
-    type: "Chain",
+    type,
     size: size
   }];
 
@@ -261,26 +323,23 @@ async function buyNow(name, price, image) {
     window.location.href = data.url;
 
   } catch (err) {
+
+    hideLoading();
+
     console.error("ERROR:", err);
+    alert("Checkout failed. Please try again.");
   }
 }
 
 // ADD TO CART
 function addToCart(button) {
-  const sizeSelect = document.getElementById("sizeSelect");
-
-  if (!sizeSelect) {
-    alert("Size selector not found.");
-    return;
-  }
-
-  const size = sizeSelect.value;
+  const size = document.getElementById("sizeSelect").value;
 
   const product = {
-    name: "Handmade Silver Cuban Chain",
-    price: 1197.99,
-    image: "cuban4.png",
-    type: "Chain",
+    name: "Signature Cratered Cross Pendant",
+    price: 249.99,
+    image: "Cross1.jpg",
+    type: "pendant",
     size: size
   };
 
@@ -290,12 +349,17 @@ function addToCart(button) {
 
   updateCartCount();
 
-  button.classList.add("animate");
-  setTimeout(() => button.classList.remove("animate"), 200);
+  if (button) {
+    button.classList.add("animate");
+    setTimeout(() => button.classList.remove("animate"), 200);
+  }
 
   const icon = document.querySelector(".cart-icon");
-  icon.classList.add("cart-bounce");
-  setTimeout(() => icon.classList.remove("cart-bounce"), 200);
+
+  if (icon) {
+    icon.classList.add("cart-bounce");
+    setTimeout(() => icon.classList.remove("cart-bounce"), 200);
+  }
 }
 
 // UPDATE COUNT
