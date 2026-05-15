@@ -17,6 +17,24 @@
       color: #e2bc6c;
     }
 
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: #ccc;
+      text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
+      text-decoration: none;
+    }
+
     .item {
       display: flex;
       align-items: center;
@@ -89,6 +107,8 @@
 
 <body>
 
+<a onclick="goBackToPreviousPage()" class="back-btn">←</a>
+
 <h1>Your Cart</h1>
 
 <div id="cartItems"></div>
@@ -104,6 +124,15 @@ const container = document.getElementById("cartItems");
 const totalDisplay = document.getElementById("totalPrice");
 const checkoutBtn = document.getElementById("checkoutBtn");
 
+function goBackToPreviousPage() {
+  const lastPage = localStorage.getItem("lastPageBeforeCart");
+
+  if (lastPage) {
+    window.location.href = lastPage;
+  } else {
+    window.location.href = "home.html";
+  }
+}
 
 // 🔥 RENDER FUNCTION
 function renderCart() {
@@ -131,6 +160,7 @@ function renderCart() {
 
           <div style="margin-top:8px; color:#ccc;">
             ${item.size || "Size not selected"}
+          </div>
         </div>
 
         <div class="remove-btn" onclick="removeItem(${index})"></div>

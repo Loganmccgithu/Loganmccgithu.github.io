@@ -305,6 +305,8 @@ function addToCart(button) {
 
   updateCartCount();
 
+  window.addEventListener("pageshow", updateCartCount);
+
   button.classList.add("animate");
   setTimeout(() => button.classList.remove("animate"), 200);
 
@@ -321,6 +323,7 @@ function updateCartCount() {
 
 // GO TO CART PAGE
 function goToCart() {
+  localStorage.setItem("lastPageBeforeCart", window.location.href);
   window.location.href = "cart.html";
 }
 
