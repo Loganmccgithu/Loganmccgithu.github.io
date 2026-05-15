@@ -234,8 +234,19 @@ function changeImage(src) {
   }, 100);
 }
 
+function showLoading() {
+  document.getElementById("loadingPopup").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loadingPopup").style.display = "none";
+}
+
 // BUY NOW
 async function buyNow(name, price, image) {
+
+  showLoading();
+
   const size = document.getElementById("sizeSelect").value;
 
   const cart = [{
@@ -259,7 +270,11 @@ async function buyNow(name, price, image) {
     window.location.href = data.url;
 
   } catch (err) {
+
+    hideLoading();
+
     console.error("ERROR:", err);
+    alert("Checkout failed. Please try again.");
   }
 }
 
