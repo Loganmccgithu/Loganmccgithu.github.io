@@ -144,6 +144,57 @@
   </style>
 </head>
 
+<!-- LOADING POPUP -->
+<div id="loadingPopup" style="
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
+  font-family:Georgia, serif;
+">
+
+  <div style="
+    width:60px;
+    height:60px;
+    border:5px solid #333;
+    border-top:5px solid gold;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+  "></div>
+
+  <p style="margin-top:20px; font-size:20px;">
+    Preparing Secure Checkout...
+  </p>
+
+  <button onclick="hideLoading()" style="
+    margin-top:25px;
+    background:transparent;
+    border:1px solid white;
+    color:white;
+    padding:10px 20px;
+    cursor:pointer;
+    font-family:Georgia, serif;
+  ">
+    ← Back
+  </button>
+
+</div>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
 <body>
 
 <a href="PAC.html" class="back-btn">←</a>
@@ -198,12 +249,30 @@
 </div>
 
 <script>
+// IMAGE SWITCH
 function changeImage(src) {
-  document.getElementById("mainImage").src = src;
+  const img = document.getElementById("mainImage");
+  img.style.opacity = 0;
+
+  setTimeout(() => {
+    img.src = src;
+    img.style.opacity = 1;
+  }, 100);
+}
+
+function showLoading() {
+  document.getElementById("loadingPopup").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loadingPopup").style.display = "none";
 }
 
 // BUY NOW
 async function buyNow(name, price, image, type) {
+
+  showLoading();
+
   const size = document.getElementById("sizeSelect").value;
 
   const cart = [{
@@ -227,7 +296,11 @@ async function buyNow(name, price, image, type) {
     window.location.href = data.url;
 
   } catch (err) {
+
+    hideLoading();
+
     console.error("ERROR:", err);
+    alert("Checkout failed. Please try again.");
   }
 }
 
@@ -236,9 +309,9 @@ function addToCart(button) {
   const size = document.getElementById("sizeSelect").value;
 
   const product = {
-    name: "Silver Heart Charm",
-    price: 128.99,
-    image: "heartcharm.png",
+    name: "Signature Cratered Cross Pendant",
+    price: 249.99,
+    image: "Cross1.jpg",
     type: "pendant",
     size: size
   };
