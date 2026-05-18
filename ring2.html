@@ -318,12 +318,19 @@ function hideLoading() {
   document.getElementById("loadingPopup").style.display = "none";
 }
 
+function getRingSizes() {
+  const singleSize = document.getElementById("singleRingSize").value;
+  const doubleSize = document.getElementById("doubleRingSize").value;
+
+  return `Single Ring: ${singleSize} | Double Ring: ${doubleSize}`;
+}
+
 // BUY NOW
 async function buyNow(name, price, image) {
 
   showLoading();
 
-  const size = document.getElementById("sizeSelect").value;
+  const size = getRingSizes();
 
   const cart = [{
     name,
@@ -356,14 +363,7 @@ async function buyNow(name, price, image) {
 
 // ADD TO CART
 function addToCart(button) {
-  const sizeSelect = document.getElementById("sizeSelect");
-
-  if (!sizeSelect) {
-    alert("Size selector not found.");
-    return;
-  }
-
-  const size = sizeSelect.value;
+  const size = getRingSizes();
 
   const product = {
     name: "Silver Woven Rings",
@@ -395,11 +395,14 @@ function updateCartCount() {
 
 // GO TO CART PAGE
 function goToCart() {
+  localStorage.setItem("lastPageBeforeCart", window.location.href);
   window.location.href = "cart.html";
 }
 
 // LOAD COUNT ON PAGE LOAD
 updateCartCount();
+
+window.addEventListener("pageshow", updateCartCount);
 </script>
 
 </body>
