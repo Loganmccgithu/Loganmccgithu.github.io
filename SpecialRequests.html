@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Custom Orders - KingsCraft</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Georgia, serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    header img {
+      max-width: 150px;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: #ccc;
+      text-decoration: none;
+      z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: white;
+      transform: translateX(-3px);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      color: #e2bc6c;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 42px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #bbb;
+      margin-bottom: 50px;
+      line-height: 1.7;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #e2bc6c;
+      font-size: 18px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      background: #111;
+      border: 1px solid #333;
+      color: white;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: gold;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      background: gold;
+      color: black;
+      border: none;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .note {
+      margin-top: 40px;
+      text-align: center;
+      color: #777;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .container {
+        margin-top: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="index.html" class="back-btn">←</a>
+
+<header>
+  <img src="FullLogo.png" alt="KingsCraft Logo">
+</header>
+
+<div class="container">
+
+  <h1>Custom Orders</h1>
+
+  <div class="subtitle">
+    Looking for something unique?<br>
+    Submit a custom order request and describe exactly what you want created.
+  </div>
+
+  <form id="customOrderForm">
+
+    <div>
+      <label>Full Name</label>
+      <input type="text" required>
+    </div>
+
+    <div>
+      <label>Email Address</label>
+      <input type="email" required>
+    </div>
+
+    <div>
+      <label>Type of Item</label>
+      <select>
+        <option>Ring</option>
+        <option>Chain</option>
+        <option>Bracelet</option>
+        <option>Pendant</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Budget Range</label>
+      <select>
+        <option>$100 - $300</option>
+        <option>$300 - $600</option>
+        <option>$600 - $1000</option>
+        <option>$1000+</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Special Request Details</label>
+      <textarea placeholder="Describe your idea, materials, sizes, style, engravings, gemstones, inspiration, or anything else..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Submit Request
+    </button>
+
+  </form>
+
+  <div class="note">
+    KingsCraft will review your request and contact you through email regarding pricing, timelines, and design details.
+  </div>
+
+</div>
+
+<script>
+document.getElementById("customOrderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  alert("Your custom order request has been submitted.");
+
+  this.reset();
+});
+</script>
+
+</body>
+</html>
